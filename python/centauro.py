@@ -102,9 +102,10 @@ class jet:
         return math.asinh( 2 * pT / (self.pP_SM(four_vector) + e ) )
     
     def phi(self):
-        four_vector = self.total_p(self.constituents)
+        vec4 = self.total_p(self.constituents)
         e = 0.000000000001
-        return math.atan(four_vector[2]/(four_vector[1] + e))
+        # return math.atan(four_vector[2]/(four_vector[1] + e))
+        return math.copysign(math.acos(vec4[1]/((vec4[1]**2 + vec4[2]**2)**0.5 + e)), vec4[2])
         
     def y(self): 
         four_vector = self.total_p(self.constituents)
@@ -155,8 +156,8 @@ e  = math.e
 
 #------------------------------------------------------------------------------   
 def DR2(jet1, jet2):
-    eta1 = jet1.etaBP()
-    eta2 = jet2.etaBP()
+    eta1 = jet1.etaB()
+    eta2 = jet2.etaB()
     phi1 = jet1.phi()
     phi2 = jet2.phi()
     return  ( (eta1 - eta2)**2 + 2 * eta1 * eta2 *(1- math.cos(phi1-phi2) ) ) 
